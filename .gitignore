@@ -1,0 +1,28 @@
+# Секреты и переменные окружения
+.env
+.env.*
+!.env.example
+
+# Виртуальное окружение
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# PyCharm
+.idea/
+*.iml
+
+# Логи и временные файлы
+cron.log
+*.log
+news_with_text.json
+
+# ОС
+.DS_Store
+Thumbs.db
