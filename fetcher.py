@@ -1,7 +1,7 @@
 import feedparser
 import requests
 from datetime import datetime, timedelta
-from categories import category_decision
+from categories import category_decision, url_decision
 from filter import is_relevant
 
 SOURCES = {
@@ -30,14 +30,15 @@ def fetch_news(hours=24):
 
             for entry in feed.entries:
 
-                decision = category_decision(entry)
-
-                if decision == "block":
+                link = entry.get("link", "")
+                if url_decision(link) == "block":
                     continue
 
-                if decision == "unknown":
-                    if not is_relevant(entry.get("title", "")):
-                        continue
+                decision = category_decision(entry)
+                if decision == "block":
+                    continue
+                if decision == "unknown" and not is_relevant(entry.get("title", "")):
+                    continue
 
 
                 published = None

@@ -27,6 +27,22 @@ STOP_WORDS = [
 
 ]
 
+
+STOP_WORDS += [
+    # Лайфстайл / инструкции
+    "pasos para", "cómo dejar", "cómo cuidar", "qué tener en cuenta",
+    "trucos", "consejos", "tips", "impecable", "antiage",
+    # Лотереи / азартные игры
+    "lotería", "boleto ganador", "sorteo", "quiniela", "5 de oro",
+    # Светская хроника / культура / реклама
+    "corona", "se consagró", "premio", "galardón", "festival",
+    "documental", "entretenido", "muestra", "exposición",
+    # Локальные события
+    "expo", "este sábado", "dique",
+    # Здоровье/лайфстайл (если не нужно)
+    "semillas", "chia", "fibra", "microbioma", "longevidad",
+]
+
 def is_relevant(title: str) -> bool:
     """Возвращает True, если заголовок стоит оставить."""
     if not title:

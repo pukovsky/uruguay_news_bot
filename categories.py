@@ -1,25 +1,56 @@
+from urllib.parse import urlparse
+
+BLOCKED_SECTIONS = {
+    "deporte", "humor", "cultura", "lento", "opinion",
+    "le-monde-diplomatique", "gigantes", "cotidiana",
+    "tvshow", "ovacion", "bienestar", "vida-actual",
+    "el-empresario",
+    "rioabierto",
+}
+
+def get_url_section(link: str) -> str:
+    path = urlparse(link).path.strip("/")
+    parts = path.split("/")
+    return parts[0] if parts else ""
+
+def url_decision(link: str) -> str:
+    section = get_url_section(link)
+    if section in BLOCKED_SECTIONS:
+        return "block"
+    return "unknown"
+
+
 BLOCKED_CATEGORIES = {
-    # Спорт
-    "fútbol", "fútbol femenino", "básquetbol", "tenis", "rugby",
-    "atletismo", "otros deportes",
-    # Развлечения / светская хроника
-    "teatro y carnaval", "tv y radio", "virales", "música",
-    "videojuegos", "humor", "ficción", "fitness",
-    # Служебное / не новости
-    "efemérides", "en clave país", "servicios", "artículos para escuchar",
-    "apuntes del día", "ediciones gigantes", "lento › ediciones",
-    "lento › editorial", "le monde › contratapa", "le monde › culturas",
-    "le monde › dossier", "le monde › editorial", "le monde › mundo",
-    "le monde › región", "le monde › temas",
-    # Мнения (если не нужны)
-    "opiniones", "posturas", "ensayo", "perfil", "miradas",
-    "fuera de agenda", "intercambios", "crónica", "reportaje",
-    "fotografía", "fotorreportaje", "visualizaciones",
-    # агроновости
-    "valor agregado",
-    "mente",
-    "calidad de vida",
-    "bienestar",
+    # ... существующие ...
+
+    # El País — лайфстайл и хроника
+    "hogar", "personajes", "vida sana", "el empresario",
+    "gastronomía", "moda", "belleza", "automóviles",
+
+    # Лотереи и азартные игры
+    "lotería", "mega millions", "quiniela", "5 de oro",
+
+    # Культура / развлечения (если не нужны)
+    "cine", "tv", "streaming", "arte", "música", "infantiles",
+    "literarias de deporte", "medios", "comer y beber",
+
+    # Мнения и редакционные статьи
+    "editorial", "opiniones", "posturas", "ensayo",
+    "crónica", "reportaje", "perfil", "ficción",
+    "fotorreportaje", "visualizaciones",
+
+    # Le Monde (дайджест, а не новости)
+    "le monde › contratapa", "le monde › culturas",
+    "le monde › dossier", "le monde › editorial",
+    "le monde › mundo", "le monde › región", "le monde › temas",
+
+    # Lento (лонгриды)
+    "lento › ediciones", "lento › editorial",
+
+    # Служебное
+    "efemérides", "servicios", "artículos para escuchar",
+    "apuntes del día", "ediciones gigantes", "en clave país",
+    "intercambios", "datos abiertos",
 }
 
 ALLOWED_CATEGORIES = {
@@ -42,7 +73,7 @@ ALLOWED_CATEGORIES = {
     # Суды / безопасность
     "procesos judiciales", "sistema judicial", "cárceles",
     "fuerzas de seguridad", "crimen organizado",
-    # Международка
+    # Международные отношения
     "internacionales", "américa", "asia", "españa", "gobernanza global",
     "trabajo › mundo",
     # Экология / вода (если интересно)

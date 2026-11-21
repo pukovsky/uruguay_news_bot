@@ -1,13 +1,13 @@
 from fetcher import fetch_news
 from extractor import enrich_with_text
-from summarizer import summarize, deduplicate_summaries
+from summarizer import summarize, finalize_digest
 from publisher import publish_digest
 import time
 
 def main():
     news = fetch_news(hours=24)
 
-    news = news[:20]
+    # news = news[:20]
     print(f"Обрабатываю {len(news)} новостей")
 
     enriched = enrich_with_text(news)
@@ -28,8 +28,8 @@ def main():
 
 
     if summaries:
-         summaries = deduplicate_summaries(summaries)
-         publish_digest(summaries)
+         final_digest = finalize_digest(summaries)
+         publish_digest(final_digest)
     else:
          print("После фильтрации не осталось новостей")
 
